@@ -1,0 +1,93 @@
+/* CSS 主要設定網頁html格式設定 */
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; /* 將 canvas 放在最底層 */
+}
+
+ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  gap: 40px; /* 增加選單標題之間的間距 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  z-index: 2; /* 將選單放在最上層 */
+}
+
+ul li {
+  color: #442a13;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+}
+
+ul li a {
+  text-decoration: none;
+  color: #442a13;
+}
+
+ul li a:hover {
+  color: #bc8a5f;
+}
+
+/* 子選單樣式 */
+ul li .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  width: 150px; /* 固定子選單寬度 */
+}
+
+ul li:hover .submenu {
+  display: block;
+}
+
+ul li .submenu li {
+  margin: 5px 0; /* 增加子選單項目之間的間距 */
+}
+
+ul li .submenu li a {
+  color: #442a13;
+  font-size: 14px;
+  display: block; /* 確保子選單每個選項一行顯示 */
+}
+
+ul li .submenu li a:hover {
+  color: #bc8a5f;
+}
+
+/* iframe 樣式 */
+.iframe-display {
+  position: absolute;
+  top: 100px; /* 距離頂部 100px */
+  left: 200px; /* 距離左側 200px */
+  right: 200px; /* 距離右側 200px */
+  bottom: 100px; /* 距離底部 100px */
+  border: none;
+  z-index: 1; /* 將 iframe 放在第二層 */
+  width: calc(100% - 400px); /* 計算寬度，減去左右邊距 */
+  height: calc(100% - 200px); /* 計算高度，減去上下邊距 */
+  display: none; /* 預設隱藏 iframe */
+}

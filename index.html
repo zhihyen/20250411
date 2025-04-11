@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas with Menu</title>
+  <link rel="stylesheet" href="style.css"> <!-- 引入外部 CSS -->
+</head>
+<body>
+  <!-- 選單 -->
+  <ul>
+    <li><a href="#home" onclick="hideIframe()">首頁</a></li>
+    <li><a href="#about">自我介紹</a></li>
+    <li>
+      <a href="#portfolio">作品集</a>
+      <ul class="submenu">
+        <li><a href="https://youtu.be/2t6AvxDkkcY?si=cdY9bIjJ8dr8GRe4" target="iframe-display" onclick="showIframe()">第一週</a></li>
+        <li><a href="https://hackmd.io/@OQAn51zHSgacKvDPt1fqeA/rJ0w3ydj1e" target="iframe-display" onclick="showIframe()">第二週</a></li>
+        <li><a href="https://hackmd.io/@OQAn51zHSgacKvDPt1fqeA/rJwhdQ-3kl" target="iframe-display" onclick="showIframe()">第三週</a></li>
+        <li><a href="https://youtu.be/XPNlZJyv4vE" target="iframe-display" onclick="showIframe()">第四週</a></li>
+      </ul>
+    </li>
+    <li><a href="#quiz">測驗卷</a></li>
+    <li><a href="#tutorials">教學影片</a></li>
+  </ul>
+
+  <!-- iframe 顯示區域 -->
+  <iframe name="iframe-display" class="iframe-display" src=""></iframe>
+
+  <!-- p5.js 動畫 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <script>
+    let circles = [];
+    let morandiColors = [
+      '#99C1DE', '#BCD4E6', '#D6E2E9', '#F0EFEB', '#DBE7E4',
+      '#C5DEDD', '#FAD2E1', '#FDE2E4', '#FFF1E6', '#EDDCD2', '#CDB4DB'
+    ];
+
+    function setup() {
+      let canvas = createCanvas(windowWidth, windowHeight);
+      canvas.style('z-index', '-1'); // 將 canvas 放在最底層
+      canvas.position(0, 0);
+      background('#c0d6df'); // Set background to #c0d6df
+      
+      // Generate 40 circles with random positions and colors
+      let attempts = 0;
+      while (circles.length < 40 && attempts < 1000) {
+        let newCircle = {
+          x: random(width), // Random x position
+          y: random(height), // Random y position
+          size: random(50, 120), // Random size between 50 and 120
+          color: random(morandiColors) // Random color from the palette
+        };
+        
+        // Check if the new circle overlaps with existing circles
+        let overlapping = false;
+        for (let circle of circles) {
+          let distance = dist(newCircle.x, newCircle.y, circle.x, circle.y);
+          if (distance < (newCircle.size + circle.size) / 2) {
+            overlapping = true;
+            break;
+          }
+        }
+        
+        // If not overlapping, add the circle to the array
+        if (!overlapping) {
+          circles.push(newCircle);
+        }
+        attempts++;
+      }
+    }
+
+    function draw() {
+      background('#c0d6df'); // Set background to #c0d6df in draw loop
+      
+      // Calculate size factor based on mouseX position
+      let sizeFactor = map(mouseX, 0, width, 50, 120);
+      
+      // Draw circles
+      for (let circle of circles) {
+        fill(circle.color);
+        noStroke();
+        ellipse(circle.x, circle.y, circle.size * sizeFactor / 80);
+      }
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    // Function to hide iframe
+    function hideIframe() {
+      document.querySelector('.iframe-display').style.display = 'none';
+    }
+
+    // Function to show iframe
+    function showIframe() {
+      document.querySelector('.iframe-display').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
